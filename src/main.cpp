@@ -4,20 +4,25 @@
 #include <iostream>
 
 int main() {
-	std::cout<< "Hello Polyscope!" << std::endl;
+  std::cout << "Hello Polyscope!" << std::endl;
 
-	polyscope::init();
+  polyscope::init();
 
-	// Read the mesh
-	Eigen::MatrixXd meshV;
-	Eigen::MatrixXi meshF;
-	igl::readOBJ("./resources/bunny.obj", meshV, meshF);
+  // Read the mesh
+  Eigen::MatrixXd meshV;
+  Eigen::MatrixXi meshF;
+  igl::readOBJ("./resources/bunny.obj", meshV, meshF);
 
-	// Register the mesh with Polyscope
-	polyscope::registerSurfaceMesh("input mesh", meshV, meshF);
+  // Register the mesh with Polyscope
+  polyscope::registerSurfaceMesh("input mesh", meshV, meshF);
 
-	// Show the GUI
-	polyscope::show();
+  // Add a slice plane
+  polyscope::SlicePlane *psPlane = polyscope::addSceneSlicePlane();
+  psPlane->setDrawPlane(true); // render the semi-transparent gridded plane
+  psPlane->setDrawWidget(true);
 
-	return 0;
+  // Show the GUI
+  polyscope::show();
+
+  return 0;
 }
